@@ -12,8 +12,10 @@ with sync_playwright() as p:
         timeout=120000
     )
 
-    page.screenshot(path="page.png", full_page=True)
-
     print("TITLE =", page.title())
+
+    print("BODY START")
+    print(page.locator("body").inner_text()[:10000])
+    print("BODY END")
 
     browser.close()
