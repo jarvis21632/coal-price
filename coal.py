@@ -1,33 +1,31 @@
 import os
 import requests
 
-LINE_TOKEN = os.environ["LINE_TOKEN"]
-LINE_USER_ID = os.environ["LINE_USER_ID"]
-
-message = "🚀 GitHub Actions 測試成功"
+token = os.environ["LINE_TOKEN"]
+user_id = os.environ["LINE_USER_ID"]
 
 url = "https://api.line.me/v2/bot/message/push"
 
 headers = {
-"Authorization": f"Bearer {LINE_TOKEN}",
-"Content-Type": "application/json"
+    "Authorization": f"Bearer {token}",
+    "Content-Type": "application/json"
 }
 
 payload = {
-"to": LINE_USER_ID,
-"messages": [
-{
-"type": "text",
-"text": message
-}
-]
+    "to": user_id,
+    "messages": [
+        {
+            "type": "text",
+            "text": "🚀 GitHub 發送 LINE 測試成功"
+        }
+    ]
 }
 
 r = requests.post(
-url,
-headers=headers,
-json=payload,
-timeout=30
+    url,
+    headers=headers,
+    json=payload,
+    timeout=30
 )
 
 print("Status:", r.status_code)
