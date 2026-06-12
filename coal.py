@@ -1,6 +1,6 @@
 import requests
 
-url = "https://www.cpc.com.tw/cp.aspx?n=53"
+url = "https://www.cpc.com.tw/cp.aspx?n=41"
 
 r = requests.get(
     url,
@@ -12,13 +12,17 @@ r = requests.get(
 
 html = r.text
 
-idx = html.find("燃料油")
+print("status =", r.status_code)
 
-print("position =", idx)
+keyword = "低硫"
 
-if idx >= 0:
-    start = max(0, idx - 2000)
-    end = min(len(html), idx + 4000)
-    print(html[start:end])
+idx = html.find(keyword)
+
+print("keyword position =", idx)
+
+if idx == -1:
+    print("找不到關鍵字")
 else:
-    print("找不到")
+    start = max(0, idx - 2000)
+    end = min(len(html), idx + 5000)
+    print(html[start:end])
