@@ -1,4 +1,3 @@
-:::writing{variant="document" id="43127"}
 name: Coal Price
 
 on:
@@ -21,4 +20,3 @@ jobs:
         env:
           LINE_TOKEN: ${{ secrets.LINE_TOKEN }}
           LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
-:::
