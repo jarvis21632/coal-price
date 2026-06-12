@@ -1,4 +1,5 @@
 import requests
+from bs4 import BeautifulSoup
 
 url = "https://vipmbr.cpc.com.tw/mbwebs/showhistoryprice_oil.aspx"
 
@@ -10,10 +11,37 @@ r = requests.get(
     }
 )
 
-print("status =", r.status_code)
+soup = BeautifulSoup(r.text, "html.parser")
 
-html = r.text
+table = soup.find("table", {"id": "MyGridView"})
 
-print("MyGridView =", html.find("MyGridView"))
-print("低硫 =", html.find("低硫"))
-print("0.5 =", html.find("0.5"))
+rows = table.find_all("tr")
+
+headers = []
+
+for th in rows[0].find_all("th"):
+    headers.append(th.get_text(strip=True))
+
+target_col = None
+
+for i, h in enumerate(headers):
+    if "低硫燃料油(0.5%)(KL)" in h:
+        target_col = i
+        break
+
+print("欄位位置 =", target_col)
+
+for row in rows[1:]:
+
+    cols = row.find_all(["td", "th"])
+
+    if len(cols) <= target_col:
+        continue
+
+    date = cols[0].get_text(strip=True)
+    value = cols[target_col].get_text(strip=True)
+
+    if value:
+        print("日期 =", date)
+        print("價格 =", value)
+        break
