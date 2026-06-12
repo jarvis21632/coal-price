@@ -1,21 +1,19 @@
-from playwright.sync_api import sync_playwright
+import requests
 
-with sync_playwright() as p:
+url = "https://vipmbr.cpc.com.tw/mbwebs/showhistoryprice_oil.aspx"
 
-    browser = p.chromium.launch(headless=True)
+r = requests.get(
+    url,
+    timeout=60,
+    headers={
+        "User-Agent": "Mozilla/5.0"
+    }
+)
 
-    page = browser.new_page()
+print("status =", r.status_code)
 
-    page.goto(
-        "https://www.cpc.com.tw/cp.aspx?n=53",
-        wait_until="networkidle",
-        timeout=120000
-    )
+html = r.text
 
-    print("TITLE =", page.title())
-
-    print("BODY START")
-    print(page.locator("body").inner_text()[:10000])
-    print("BODY END")
-
-    browser.close()
+print("MyGridView =", html.find("MyGridView"))
+print("低硫 =", html.find("低硫"))
+print("0.5 =", html.find("0.5"))
