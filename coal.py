@@ -14,9 +14,9 @@ idx = html.find(keyword)
 
 print("keyword position =", idx)
 
-if idx > 0:
-start = max(0, idx - 1000)
-end = min(len(html), idx + 3000)
-print(html[start])
+if idx == -1:
+    print("找不到關鍵字")
 else:
-print("找不到關鍵字")
+    start = max(0, idx - 1000)
+    end = min(len(html), idx + 3000)
+    print(html[start:end])
