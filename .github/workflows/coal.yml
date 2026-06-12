@@ -17,6 +17,3 @@ jobs:
       - run: pip install requests
 
       - run: python coal.py
-        env:
-          LINE_TOKEN: ${{ secrets.LINE_TOKEN }}
-          LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
