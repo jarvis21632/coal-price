@@ -1,22 +1,24 @@
+:::writing{variant="document" id="43127"}
 name: Coal Price
 
 on:
-workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
-send_line:
-runs-on: ubuntu-latest
+  send_line:
+    runs-on: ubuntu-latest
 
-steps:
-  - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-  - uses: actions/setup-python@v5
-    with:
-      python-version: "3.11"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
-  - run: pip install requests
+      - run: pip install requests
 
-  - run: python coal.py
-    env:
-      LINE_TOKEN: ${{ secrets.LINE_TOKEN }}
-      LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
+      - run: python coal.py
+        env:
+          LINE_TOKEN: ${{ secrets.LINE_TOKEN }}
+          LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
+:::
