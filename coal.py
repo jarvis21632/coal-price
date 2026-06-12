@@ -1,4 +1,5 @@
 import requests
+import re
 
 url = "https://tradingeconomics.com/commodity/coal"
 
@@ -10,5 +11,14 @@ r = requests.get(
     timeout=30
 )
 
-print("status =", r.status_code)
-print(r.text[:3000])
+html = r.text
+
+match = re.search(
+    r'Coal rose to ([0-9.]+) USD/T',
+    html
+)
+
+if match:
+    print("煤價 =", match.group(1))
+else:
+    print("找不到煤價")
