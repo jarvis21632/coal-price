@@ -1,19 +1,14 @@
-from playwright.sync_api import sync_playwright
+import requests
 
-with sync_playwright() as p:
+url = "https://tradingeconomics.com/commodity/coal"
 
-    browser = p.chromium.launch(headless=True)
+r = requests.get(
+    url,
+    headers={
+        "User-Agent": "Mozilla/5.0"
+    },
+    timeout=30
+)
 
-    page = browser.new_page()
-
-    page.goto(
-        "https://en.macromicro.me/series/3617/ice-newcastle-coal-futures",
-        wait_until="domcontentloaded",
-        timeout=30000
-    )
-
-    print("TITLE =", page.title())
-
-    print(page.content()[:3000])
-
-    browser.close()
+print("status =", r.status_code)
+print(r.text[:3000])
