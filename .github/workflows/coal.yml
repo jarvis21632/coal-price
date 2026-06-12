@@ -1,14 +1,14 @@
 name: Energy Report
 
 on:
-workflow_dispatch:
+  workflow_dispatch:
 
-schedule:
-- cron: '0 23 * * *'
+  schedule:
+    - cron: '0 23 * * *'
 
 jobs:
-send_line:
-runs-on: ubuntu-latest
+  send_line:
+    runs-on: ubuntu-latest
 
 steps:
   - name: Checkout
