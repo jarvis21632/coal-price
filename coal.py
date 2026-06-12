@@ -2,10 +2,21 @@ import requests
 
 url = "https://www.cpc.com.tw/cp.aspx?n=53"
 
-r = requests.get(
-    url,
-    timeout=30
-)
+r = requests.get(url, timeout=30)
+
+html = r.text
 
 print("status =", r.status_code)
-print(r.text[:5000])
+
+keyword = "低硫燃料油"
+
+idx = html.find(keyword)
+
+print("keyword position =", idx)
+
+if idx > 0:
+start = max(0, idx - 1000)
+end = min(len(html), idx + 3000)
+print(html[start])
+else:
+print("找不到關鍵字")
