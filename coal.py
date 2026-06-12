@@ -8,10 +8,12 @@ with sync_playwright() as p:
 
     page.goto(
         "https://en.macromicro.me/series/3617/ice-newcastle-coal-futures",
-        wait_until="networkidle",
-        timeout=120000
+        wait_until="domcontentloaded",
+        timeout=30000
     )
 
-    print(page.locator("span.val").all_inner_texts())
+    print("TITLE =", page.title())
+
+    print(page.content()[:3000])
 
     browser.close()
