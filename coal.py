@@ -1,0 +1,1 @@
+print("Coal scraper started")
