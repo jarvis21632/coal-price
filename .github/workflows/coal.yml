@@ -21,3 +21,8 @@ jobs:
       - run: playwright install chromium
 
       - run: python coal.py
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: screenshot
+          path: page.png
