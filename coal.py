@@ -1,47 +1,17 @@
-import requests
-from bs4 import BeautifulSoup
+from playwright.sync_api import sync_playwright
 
-url = "https://vipmbr.cpc.com.tw/mbwebs/showhistoryprice_oil.aspx"
+with sync_playwright() as p:
 
-r = requests.get(
-    url,
-    timeout=60,
-    headers={
-        "User-Agent": "Mozilla/5.0"
-    }
-)
+    browser = p.chromium.launch(headless=True)
 
-soup = BeautifulSoup(r.text, "html.parser")
+    page = browser.new_page()
 
-table = soup.find("table", {"id": "MyGridView"})
+    page.goto(
+        "https://en.macromicro.me/series/3617/ice-newcastle-coal-futures",
+        wait_until="networkidle",
+        timeout=120000
+    )
 
-rows = table.find_all("tr")
+    print(page.locator("span.val").all_inner_texts())
 
-headers = []
-
-for th in rows[0].find_all("th"):
-    headers.append(th.get_text(strip=True))
-
-target_col = None
-
-for i, h in enumerate(headers):
-    if "低硫燃料油(0.5%)(KL)" in h:
-        target_col = i
-        break
-
-print("欄位位置 =", target_col)
-
-for row in rows[1:]:
-
-    cols = row.find_all(["td", "th"])
-
-    if len(cols) <= target_col:
-        continue
-
-    date = cols[0].get_text(strip=True)
-    value = cols[target_col].get_text(strip=True)
-
-    if value:
-        print("日期 =", date)
-        print("價格 =", value)
-        break
+    browser.close()
