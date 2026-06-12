@@ -2,7 +2,6 @@ name: Energy Report
 
 on:
   workflow_dispatch:
-
   schedule:
     - cron: '0 23 * * *'
 
@@ -10,22 +9,22 @@ jobs:
   send_line:
     runs-on: ubuntu-latest
 
-  steps:
-  - name: Checkout
-    uses: actions/checkout@v4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-  - name: Setup Python
-    uses: actions/setup-python@v5
-    with:
-      python-version: "3.11"
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
-  - name: Install packages
-    run: |
-      pip install requests
-      pip install beautifulsoup4
+      - name: Install packages
+        run: |
+          pip install requests
+          pip install beautifulsoup4
 
-  - name: Run Python
-    run: python coal.py
-    env:
-      LINE_TOKEN: ${{ secrets.LINE_TOKEN }}
-      LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
+      - name: Run Python
+        run: python coal.py
+        env:
+          LINE_TOKEN: ${{ secrets.LINE_TOKEN }}
+          LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
