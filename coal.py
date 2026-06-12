@@ -1,28 +1,64 @@
-import requests
+from playwright.sync_api import sync_playwright
 
-url = "https://www.cpc.com.tw/cp.aspx?n=41"
+with sync_playwright() as p:
 
-r = requests.get(
-    url,
-    timeout=60,
-    headers={
-        "User-Agent": "Mozilla/5.0"
-    }
-)
+    browser = p.chromium.launch(headless=True)
 
-html = r.text
+    page = browser.new_page()
 
-print("status =", r.status_code)
+    page.goto(
+        "https://www.cpc.com.tw/cp.aspx?n=53",
+        wait_until="networkidle",
+        timeout=120000
+    )
 
-keyword = "低硫"
+    print("TITLE =", page.title())
 
-idx = html.find(keyword)
+    content = page.content()
 
-print("keyword position =", idx)
+    print("低硫 =", content.find("低硫燃料油"))
+    print("0.5 =", content.find("0.5"))
+    print("KL =", content.find("KL"))
 
-if idx == -1:
-    print("找不到關鍵字")
-else:
-    start = max(0, idx - 2000)
-    end = min(len(html), idx + 5000)
-    print(html[start:end])
+    browser.close()
+
+然後把 coal.yml 裡的：
+
+- run: python coal.py
+
+改成：
+
+- run: python coal.py
+
+（不用改，其實保持原樣即可）
+
+再 Run Workflow 一次。
+
+我要看結果類似：
+
+TITLE = 汽、柴、燃油歷史價格
+低硫 = 12345
+0.5 = 12350
+KL = 12360
+
+或：
+
+低硫 = -1
+
+如果成功找到：
+
+低硫燃料油
+
+下一步我就直接幫你抓：
+
+最新日期
+最新價格
+
+例如：
+
+2026/6/6
+20402
+
+之後再接回 LINE。
+
+目前最大的關卡（GitHub、Actions、Playwright、LINE）其實都已經過了。現在只是在從表格裡拿數字而已。
