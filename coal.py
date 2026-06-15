@@ -19,14 +19,14 @@ def get_coal_price():
 
     html = r.text
 
-    print("開始找煤價...")
+    # print("開始找煤價...")
 
     matches = re.findall(
         r'([0-9]+\.[0-9]+)\s*USD/T',
         html
     )
 
-    print("找到的價格:", matches[:10])
+    # print("找到的價格:", matches[:10])
 
     if matches:
         return matches[0]
