@@ -6,29 +6,32 @@ from datetime import datetime
 
 # 抓 TradingEconomics 煤價
 def get_coal_price():
+
     url = "https://tradingeconomics.com/commodity/coal"
 
     r = requests.get(
         url,
-        headers={"User-Agent": "Mozilla/5.0"},
+        headers={
+            "User-Agent": "Mozilla/5.0"
+        },
         timeout=30
     )
 
     html = r.text
 
-print("開始找煤價...")
+    print("開始找煤價...")
 
-matches = re.findall(
-    r'([0-9]+\.[0-9]+)\s*USD/T',
-    html
-)
+    matches = re.findall(
+        r'([0-9]+\.[0-9]+)\s*USD/T',
+        html
+    )
 
-print("找到的價格:", matches[:10])
+    print("找到的價格:", matches[:10])
 
-if matches:
-    return matches[0]
+    if matches:
+        return matches[0]
 
-return "N/A"
+    return "N/A"
 
 
 # 抓中油低硫燃料油
