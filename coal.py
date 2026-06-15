@@ -16,15 +16,19 @@ def get_coal_price():
 
     html = r.text
 
-    match = re.search(
-        r'Coal rose to ([0-9.]+) USD/T',
-        html
-    )
+print("開始找煤價...")
 
-    if match:
-        return match.group(1)
+matches = re.findall(
+    r'([0-9]+\.[0-9]+)\s*USD/T',
+    html
+)
 
-    return "N/A"
+print("找到的價格:", matches[:10])
+
+if matches:
+    return matches[0]
+
+return "N/A"
 
 
 # 抓中油低硫燃料油
@@ -124,4 +128,4 @@ message = f"""📊 能源價格每日快報
 """
 
 print(message)
-send_line(message)
+# send_line(message)
