@@ -19,6 +19,10 @@ def get_coal_price():
 
     html = r.text
 
+    print("HTTP狀態碼:", r.status_code)
+    print("HTML長度:", len(html))
+    print("網址:", r.url)
+
     print("開始找煤價...")
 
     matches = re.findall(
@@ -26,11 +30,24 @@ def get_coal_price():
         html
     )
 
+    print("找到價格數量:", len(matches))
     print("找到的價格:", matches[:10])
 
     if matches:
         return matches[0]
 
+    # 找不到價格時儲存網頁
+    with open(
+        "debug_coal.html",
+        "w",
+        encoding="utf-8"
+    ) as f:
+        f.write(html)
+
+    print("煤價抓取失敗")
+    print("HTML前1000字:")
+    print(html[:1000])
+    
     return "N/A"
 
 
