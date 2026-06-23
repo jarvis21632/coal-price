@@ -22,7 +22,7 @@ def get_coal_price():
     # print("開始找煤價...")
 
     matches = re.findall(
-        r'([0-9]+\.[0-9]+)\s*USD/T',
+        r'(\d+(?:\.\d+)?)\s*USD/T',
         html
     )
 
@@ -131,4 +131,4 @@ message = f"""📊 能源價格每日快報
 """
 
 print(message)
-send_line(message)
+# send_line(message)
