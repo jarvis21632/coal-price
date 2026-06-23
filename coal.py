@@ -148,4 +148,4 @@ message = f"""📊 能源價格每日快報
 """
 
 print(message)
-# send_line(message)
+send_line(message)
